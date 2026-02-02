@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBV & Institutionalist Theories Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);
+        min-height: 100vh;
+        padding: 20px;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .quiz-header {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+
+    .quiz-header h1 {
+        color: #2c3e50;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    .quiz-header p {
+        color: #7f8c8d;
+        font-size: 1.1em;
+    }
+
+    .score-board {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .score-item {
+        text-align: center;
+    }
+
+    .score-label {
+        font-size: 0.9em;
+        color: #7f8c8d;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .score-value {
+        font-size: 2em;
+        font-weight: bold;
+        color: #f39c12;
+    }
+
+    .question-card {
+        background: white;
+        border-radius: 20px;
+        padding: 35px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s;
+    }
+
+    .question-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .question-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 3px solid #f39c12;
+    }
+
+    .question-number {
+        background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    .question-type {
+        background: #f0f0f0;
+        padding: 5px 15px;
+        border-radius: 15px;
+        font-size: 0.9em;
+        color: #666;
+    }
+
+    .question-text {
+        font-size: 1.25em;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+
+    .hint-box {
+        background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .hint-icon {
+        font-size: 1.5em;
+        margin-right: 10px;
+    }
+
+    .hint-text {
+        color: #2c3e50;
+        font-weight: 500;
+    }
+
+    .options {
+        margin: 20px 0;
+    }
+
+    .option {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 10px 0;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: 2px solid transparent;
+    }
+
+    .option:hover {
+        background: #e9ecef;
+        transform: translateX(5px);
+    }
+
+    .option input {
+        margin-right: 12px;
+        cursor: pointer;
+    }
+
+    .option label {
+        cursor: pointer;
+        width: 100%;
+        display: inline-block;
+    }
+
+    .show-answer-btn {
+        background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 25px;
+        font-size: 1.1em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .show-answer-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(243, 156, 18, 0.6);
+    }
+
+    .answer-section {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        border-radius: 12px;
+        animation: slideDown 0.4s ease;
+    }
+
+    .answer-section.show {
+        display: block;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .answer-section.correct {
+        background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+    }
+
+    .answer-section.incorrect {
+        background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+    }
+
+    .answer-label {
+        font-weight: bold;
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        color: white;
+    }
+
+    .explanation {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 15px;
+        border-radius: 10px;
+        color: #2c3e50;
+        line-height: 1.8;
+    }
+
+    .explanation-title {
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #f39c12;
+    }
+
+    .final-score {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        margin-top: 30px;
+    }
+
+    .final-score h2 {
+        color: #2c3e50;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    .final-percentage {
+        font-size: 4em;
+        font-weight: bold;
+        background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 20px 0;
+    }
+
+    .performance-message {
+        font-size: 1.3em;
+        color: #7f8c8d;
+        margin: 20px 0;
+    }
+
+    .restart-btn {
+        background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);
+        color: white;
+        border: none;
+        padding: 15px 50px;
+        border-radius: 25px;
+        font-size: 1.2em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 20px;
+    }
+
+    .restart-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(243, 156, 18, 0.6);
+    }
+
+    .submit-quiz-btn {
+        background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+        color: white;
+        border: none;
+        padding: 20px 60px;
+        border-radius: 30px;
+        font-size: 1.3em;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4);
+        display: block;
+        margin: 40px auto;
+    }
+
+    .submit-quiz-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 184, 148, 0.6);
+    }
+
+    @media (max-width: 768px) {
+        .quiz-header h1 {
+            font-size: 1.8em;
+        }
+        
+        .score-board {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.1em;
+        }
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <div class="quiz-header">
+            <h1>📊 RBV & Institutionalist Theories Quiz</h1>
+            <p>Test your knowledge of Resource-Based View and theories of firm growth</p>
+            <p style="margin-top: 10px; font-size: 0.95em; color: #95a5a6;">15 Questions • Multiple Choice</p>
+        </div>
+
+```
+    <div class="score-board">
+        <div class="score-item">
+            <div class="score-label">Questions Answered</div>
+            <div class="score-value" id="answeredCount">0 / 15</div>
+        </div>
+        <div class="score-item">
+            <div class="score-label">Current Score</div>
+            <div class="score-value" id="currentScore">0</div>
+        </div>
+        <div class="score-item">
+            <div class="score-label">Progress</div>
+            <div class="score-value" id="progressPercent">0%</div>
+        </div>
+    </div>
+
+    <div id="quizContainer">
+        <!-- Question 1 -->
+        <div class="question-card" data-question="1">
+            <div class="question-header">
+                <span class="question-number">Question 1</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                According to traditional economic theories, which factors limit firm size?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Recap last week" slides</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q1a" name="q1" value="a">
+                    <label for="q1a">a) Competition and market demand constraints</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q1b" name="q1" value="b">
+                    <label for="q1b">b) Technology limitations and worker availability</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q1c" name="q1" value="c">
+                    <label for="q1c">c) Rising marginal costs and rising planning costs</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q1d" name="q1" value="d">
+                    <label for="q1d">d) Government regulations and taxation policies</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(1, 'c')">Show Answer</button>
+            <div class="answer-section" id="answer1">
+                <div class="answer-label">✓ Correct Answer: c) Rising marginal costs and rising planning costs</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    Traditional theories predict that rising marginal costs (from diminishing returns) and rising costs of planning (versus using markets) limit firm size. Both predict firms stop growing when these costs make expansion unprofitable.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-card" data-question="2">
+            <div class="question-header">
+                <span class="question-number">Question 2</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                The Blinder et al. (1998) survey found that what percentage of US firms have constant or decreasing marginal costs?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Rising MCs?" slides with survey data</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q2a" name="q2" value="a">
+                    <label for="q2a">a) 89% of firms surveyed</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q2b" name="q2" value="b">
+                    <label for="q2b">b) 50% of firms surveyed</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q2c" name="q2" value="c">
+                    <label for="q2c">c) 11% of firms surveyed</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q2d" name="q2" value="d">
+                    <label for="q2d">d) 70% of firms surveyed</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(2, 'a')">Show Answer</button>
+            <div class="answer-section" id="answer2">
+                <div class="answer-label">✓ Correct Answer: a) 89% of firms surveyed</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    The Blinder survey (representing ~70% of US economy) found 89% of firms have constant or decreasing MCs—not rising as predicted. This contradicts the traditional assumption that rising marginal costs limit firm size.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-card" data-question="3">
+            <div class="question-header">
+                <span class="question-number">Question 3</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                Why is the "diminishing marginal returns" theory problematic in real-world application?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Diminishing marginal returns?" slide</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q3a" name="q3" value="a">
+                    <label for="q3a">a) All production factors remain permanently fixed</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q3b" name="q3" value="b">
+                    <label for="q3b">b) The short run lasts indefinitely for all firms</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q3c" name="q3" value="c">
+                    <label for="q3c">c) Firms can never adjust any production factors</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q3d" name="q3" value="d">
+                    <label for="q3d">d) No strict separation exists between short and long run</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(3, 'd')">Show Answer</button>
+            <div class="answer-section" id="answer3">
+                <div class="answer-label">✓ Correct Answer: d) No strict separation exists between short and long run</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    In reality, there's no strict separation between short and long run. Firms can adjust multiple factors simultaneously rather than being constrained to varying only one, meaning diminishing returns don't necessarily occur as theory predicts.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-card" data-question="4">
+            <div class="question-header">
+                <span class="question-number">Question 4</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                How do firms address rising planning costs as they expand, according to Penrose?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Rising costs of planning?" slides</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q4a" name="q4" value="a">
+                    <label for="q4a">a) They cannot solve these problems effectively</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q4b" name="q4" value="b">
+                    <label for="q4b">b) Decentralization and multidivisional structures</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q4c" name="q4" value="c">
+                    <label for="q4c">c) Centralizing all control under one manager</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q4d" name="q4" value="d">
+                    <label for="q4d">d) Avoiding technology and automation completely</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(4, 'b')">Show Answer</button>
+            <div class="answer-section" id="answer4">
+                <div class="answer-label">✓ Correct Answer: b) Decentralization and multidivisional structures</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    Penrose argues firms solve planning problems through decentralization, M-form (multidivisional) organization, separation of ownership and control, and technological improvements. These innovations allow management of complexity without insurmountable barriers.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-card" data-question="5">
+            <div class="question-header">
+                <span class="question-number">Question 5</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                What does "M-form" stand for in organizational structure?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Rising costs of planning?" organizational solutions</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q5a" name="q5" value="a">
+                    <label for="q5a">a) Manufacturing form focusing on production only</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q5b" name="q5" value="b">
+                    <label for="q5b">b) Minimal form with smallest possible structure</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q5c" name="q5" value="c">
+                    <label for="q5c">c) Multidivisional form with semi-independent divisions</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q5d" name="q5" value="d">
+                    <label for="q5d">d) Monopoly form where one company controls markets</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(5, 'c')">Show Answer</button>
+            <div class="answer-section" id="answer5">
+                <div class="answer-label">✓ Correct Answer: c) Multidivisional form with semi-independent divisions</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    M-form means "multidivisional form"—companies divided into semi-independent divisions with decentralized decision-making. This structure helps large firms manage complexity and was adopted by most US corporations by the 1960s.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="question-card" data-question="6">
+            <div class="question-header">
+                <span class="question-number">Question 6</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                What is central management's primary role in very large firms according to Penrose?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to Penrose quote about management structure</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q6a" name="q6" value="a">
+                    <label for="q6a">a) Avoid making any strategic decisions at all</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q6b" name="q6" value="b">
+                    <label for="q6b">b) Comprehend and control every organizational detail</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q6c" name="q6" value="c">
+                    <label for="q6c">c) Personally supervise and manage all employees</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q6d" name="q6" value="d">
+                    <label for="q6d">d) Intervene in crucial areas and set organizational tone</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(6, 'd')">Show Answer</button>
+            <div class="answer-section" id="answer6">
+                <div class="answer-label">✓ Correct Answer: d) Intervene in crucial areas and set organizational tone</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    Penrose states central management doesn't try to run everything but "intervene in a few crucial areas and set the 'tone' of the organization." Focus is on strategic decisions and culture rather than controlling every detail.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="question-card" data-question="7">
+            <div class="question-header">
+                <span class="question-number">Question 7</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                Which is NOT mentioned as a potential limit to firm size?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Other limits to size?" slides</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q7a" name="q7" value="a">
+                    <label for="q7a">a) Limited market demand for outputs produced</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q7b" name="q7" value="b">
+                    <label for="q7b">b) Legal maximum size imposed by government</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q7c" name="q7" value="c">
+                    <label for="q7c">c) Increased business risk with larger operations</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q7d" name="q7" value="d">
+                    <label for="q7d">d) Limited access to financing for expansion</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(7, 'b')">Show Answer</button>
+            <div class="answer-section" id="answer7">
+                <div class="answer-label">✓ Correct Answer: b) Legal maximum size imposed by government</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    The lecture lists limited markets, limited finance access, increased risk, and lack of willingness to grow. Government-imposed size limits aren't mentioned. Moreover, the lecture argues these are real problems but NOT insurmountable constraints.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="question-card" data-question="8">
+            <div class="question-header">
+                <span class="question-number">Question 8</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                Why are challenges like accessing finance often easier for larger firms?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Other limits to size?" discussion</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q8a" name="q8" value="a">
+                    <label for="q8a">a) Larger firms never require external financing</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q8b" name="q8" value="b">
+                    <label for="q8b">b) Government provides free funding to large firms</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q8c" name="q8" value="c">
+                    <label for="q8c">c) These challenges are actually harder for larger firms</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q8d" name="q8" value="d">
+                    <label for="q8d">d) More assets, creditworthiness, and negotiating power</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(8, 'd')">Show Answer</button>
+            <div class="answer-section" id="answer8">
+                <div class="answer-label">✓ Correct Answer: d) More assets, creditworthiness, and negotiating power</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    The lecture notes these limits are "easier to overcome with larger size." Large firms have more assets for collateral, stronger creditworthiness, established lender relationships, and greater negotiating power—making finance access easier.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="question-card" data-question="9">
+            <div class="question-header">
+                <span class="question-number">Question 9</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                What is Penrose's conclusion about limits to absolute firm size?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Limits to size?" summary and Penrose quote</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q9a" name="q9" value="a">
+                    <label for="q9a">a) Only government regulation can limit absolute size</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q9b" name="q9" value="b">
+                    <label for="q9b">b) Nothing prevents indefinite expansion of firms over time</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q9c" name="q9" value="c">
+                    <label for="q9c">c) All firms eventually reach maximum profitable size</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q9d" name="q9" value="d">
+                    <label for="q9d">d) Strict hard limits prevent firms growing beyond points</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(9, 'b')">Show Answer</button>
+            <div class="answer-section" id="answer9">
+                <div class="answer-label">✓ Correct Answer: b) Nothing prevents indefinite expansion of firms over time</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    Penrose concludes: "We have found nothing to prevent the indefinite expansion of firms as time passes." No hard limits to absolute size exist, and benefits of size often make further expansion easier.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="question-card" data-question="10">
+            <div class="question-header">
+                <span class="question-number">Question 10</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                While no hard limits to SIZE exist, what potential constraint on growth does Penrose identify?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Limits to rate of growth?" slide</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q10a" name="q10" value="a">
+                    <label for="q10a">a) Total employee numbers are capped by regulation</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q10b" name="q10" value="b">
+                    <label for="q10b">b) Profit margins decline automatically with expansion</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q10c" name="q10" value="c">
+                    <label for="q10c">c) Geographic expansion is limited by trade barriers</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q10d" name="q10" value="d">
+                    <label for="q10d">d) RATE of growth limited by management capacity</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(10, 'd')">Show Answer</button>
+            <div class="answer-section" id="answer10">
+                <div class="answer-label">✓ Correct Answer: d) RATE of growth limited by management capacity</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    Penrose distinguishes limits to SIZE (none) from RATE of growth (possible). Management capacity to handle growth at any point is limited and can only expand so quickly, though M&As can mitigate this.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 11 -->
+        <div class="question-card" data-question="11">
+            <div class="question-header">
+                <span class="question-number">Question 11</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                How can firms overcome rate-of-growth limitations?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Limits to rate of growth?" solutions</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q11a" name="q11" value="a">
+                    <label for="q11a">a) These limitations cannot be overcome at all</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q11b" name="q11" value="b">
+                    <label for="q11b">b) Slowing down all expansion and growth activities</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q11c" name="q11" value="c">
+                    <label for="q11c">c) Acquiring existing firms through mergers and acquisitions</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q11d" name="q11" value="d">
+                    <label for="q11d">d) Replacing all existing management with new teams</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(11, 'c')">Show Answer</button>
+            <div class="answer-section" id="answer11">
+                <div class="answer-label">✓ Correct Answer: c) Acquiring existing firms through mergers and acquisitions</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    M&As enable rapid growth by acquiring companies with existing management teams, systems, and capabilities. This bypasses the constraint of slowly building management capacity organically.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 12 -->
+        <div class="question-card" data-question="12">
+            <div class="question-header">
+                <span class="question-number">Question 12</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                The Resource-Based View understands firms as bundles of what?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Drivers of growth" resource types</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q12a" name="q12" value="a">
+                    <label for="q12a">a) Managerial, entrepreneurial, labor, machinery, and processes</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q12b" name="q12" value="b">
+                    <label for="q12b">b) Only physical resources like buildings and equipment</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q12c" name="q12" value="c">
+                    <label for="q12c">c) Exclusively financial capital and investment funds</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q12d" name="q12" value="d">
+                    <label for="q12d">d) Only human resources and employee capabilities</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(12, 'a')">Show Answer</button>
+            <div class="answer-section" id="answer12">
+                <div class="answer-label">✓ Correct Answer: a) Managerial, entrepreneurial, labor, machinery, and processes</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    RBV sees firms as bundles of diverse resources: managerial, processes, entrepreneurial, labor, machinery, materials, market opportunities, and more. This broad view explains how firms identify and exploit growth opportunities.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 13 -->
+        <div class="question-card" data-question="13">
+            <div class="question-header">
+                <span class="question-number">Question 13</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                What happens when firms utilize their unused resources according to Penrose?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Drivers of growth" unused resources cycle</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q13a" name="q13" value="a">
+                    <label for="q13a">a) The firm immediately reaches its maximum optimal size</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q13b" name="q13" value="b">
+                    <label for="q13b">b) All resources achieve perfect utilization with no waste</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q13c" name="q13" value="c">
+                    <label for="q13c">c) The firm must shrink operations to reduce capacity</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q13d" name="q13" value="d">
+                    <label for="q13d">d) New unused resources are created, continuing growth</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(13, 'd')">Show Answer</button>
+            <div class="answer-section" id="answer13">
+                <div class="answer-label">✓ Correct Answer: d) New unused resources are created, continuing growth</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    Due to the principle of multiples and indivisibility, utilizing unused resources creates NEW unused resources. This perpetual cycle means the drive to growth never stops—each solution creates new growth opportunities.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 14 -->
+        <div class="question-card" data-question="14">
+            <div class="question-header">
+                <span class="question-number">Question 14</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                How many of the world's top 100 economies are corporations according to World Bank data?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "How big are some firms actually" World Bank data</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q14a" name="q14" value="a">
+                    <label for="q14a">a) 100 are all corporations globally</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q14b" name="q14" value="b">
+                    <label for="q14b">b) 31 corporations versus 69 countries</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q14c" name="q14" value="c">
+                    <label for="q14c">c) 69 corporations versus 31 countries</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q14d" name="q14" value="d">
+                    <label for="q14d">d) 50 corporations and 50 countries</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(14, 'c')">Show Answer</button>
+            <div class="answer-section" id="answer14">
+                <div class="answer-label">✓ Correct Answer: c) 69 corporations versus 31 countries</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    Of the world's top 100 economies, 69 are corporations and only 31 are countries. This demonstrates how massive firms have become—rivaling entire nations economically, supporting Penrose's "no limits" conclusion.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 15 -->
+        <div class="question-card" data-question="15">
+            <div class="question-header">
+                <span class="question-number">Question 15</span>
+                <span class="question-type">Multiple Choice</span>
+            </div>
+            <div class="question-text">
+                Which statement best summarizes this lecture's overall conclusion?
+            </div>
+            <div class="hint-box">
+                <span class="hint-icon">📍</span>
+                <span class="hint-text">Hint: Refer to "Limits to growth?" summary slide</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="q15a" name="q15" value="a">
+                    <label for="q15a">a) Traditional theories accurately predict strict size limits</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q15b" name="q15" value="b">
+                    <label for="q15b">b) Government intervention alone allows firms to grow large</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q15c" name="q15" value="c">
+                    <label for="q15c">c) All firms eventually stop at the same maximum size</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q15d" name="q15" value="d">
+                    <label for="q15d">d) No hard size limits; only soft rate-of-growth limits</label>
+                </div>
+            </div>
+            <button class="show-answer-btn" onclick="checkAnswer(15, 'd')">Show Answer</button>
+            <div class="answer-section" id="answer15">
+                <div class="answer-label">✓ Correct Answer: d) No hard size limits; only soft rate-of-growth limits</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    The lecture concludes traditional theories are wrong—NO hard limits to firm size exist. Rising MCs don't materialize, planning costs have solutions, other limits are overcome. Only RATE of growth may be constrained, mitigated by M&As.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <button class="submit-quiz-btn" onclick="calculateFinalScore()">🎯 Submit Quiz & See Final Score</button>
+
+    <div id="finalScoreSection" style="display: none;"></div>
+
+</div>
+
+<script>
+    let score = 0;
+    let answeredQuestions = new Set();
+    const totalQuestions = 15;
+
+    function checkAnswer(questionNum, correctAnswer) {
+        const answerSection = document.getElementById('answer' + questionNum);
+        
+        // If already shown, just toggle visibility
+        if (answerSection.classList.contains('show')) {
+            answerSection.classList.remove('show');
+            return;
+        }
+
+        const selectedOption = document.querySelector(`input[name="q${questionNum}"]:checked`);
+        if (!selectedOption) {
+            alert('Please select an answer first!');
+            return;
+        }
+
+        const userAnswer = selectedOption.value;
+        const isCorrect = userAnswer === correctAnswer;
+
+        // Update score if this is the first time answering this question
+        if (!answeredQuestions.has(questionNum)) {
+            if (isCorrect) {
+                score++;
+            }
+            answeredQuestions.add(questionNum);
+            updateScoreboard();
+        }
+
+        // Show answer with appropriate styling
+        answerSection.classList.add('show');
+        if (isCorrect) {
+            answerSection.classList.add('correct');
+            answerSection.classList.remove('incorrect');
+        } else {
+            answerSection.classList.add('incorrect');
+            answerSection.classList.remove('correct');
+        }
+    }
+
+    function updateScoreboard() {
+        document.getElementById('answeredCount').textContent = `${answeredQuestions.size} / ${totalQuestions}`;
+        document.getElementById('currentScore').textContent = score;
+        const percentage = Math.round((answeredQuestions.size / totalQuestions) * 100);
+        document.getElementById('progressPercent').textContent = percentage + '%';
+    }
+
+    function calculateFinalScore() {
+        if (answeredQuestions.size < totalQuestions) {
+            const unanswered = totalQuestions - answeredQuestions.size;
+            if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
+                return;
+            }
+        }
+
+        const percentage = Math.round((score / totalQuestions) * 100);
+        let performanceMessage = '';
+        let performanceColor = '';
+
+        if (percentage >= 90) {
+            performanceMessage = '🌟 Outstanding! Excellent understanding of RBV and firm growth theories!';
+            performanceColor = '#00b894';
+        } else if (percentage >= 75) {
+            performanceMessage = '🎉 Great job! You grasp the key concepts well!';
+            performanceColor = '#00cec9';
+        } else if (percentage >= 60) {
+            performanceMessage = '👍 Good effort! Review slides to strengthen understanding.';
+            performanceColor = '#fdcb6e';
+        } else {
+            performanceMessage = '📚 Keep studying! Review the material and try again.';
+            performanceColor = '#ff7675';
+        }
+
+        const finalScoreHTML = `
+            <div class="final-score">
+                <h2>Quiz Complete! 📊</h2>
+                <div class="final-percentage" style="background: linear-gradient(135deg, ${performanceColor} 0%, #d35400 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    ${percentage}%
+                </div>
+                <p style="font-size: 1.5em; margin: 20px 0;">
+                    <strong>Score: ${score} / ${totalQuestions}</strong>
+                </p>
+                <p class="performance-message">${performanceMessage}</p>
+                <button class="restart-btn" onclick="location.reload()">🔄 Retake Quiz</button>
+            </div>
+        `;
+
+        document.getElementById('finalScoreSection').innerHTML = finalScoreHTML;
+        document.getElementById('finalScoreSection').style.display = 'block';
+        document.getElementById('finalScoreSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Initialize
+    updateScoreboard();
+</script>
+```
+
+</body>
+</html>
